@@ -5,6 +5,7 @@ use panic_halt as _;
 use rp_pico::{entry};
 use rp_pico::hal::{pwm::{Slices, Channel}, pac, sio::Sio, gpio::{PinId, PullDown, FunctionPwm, FunctionSio, SioInput, SioOutput, PullUp, Pin, bank0::{Gpio1, Gpio5, Gpio9, Gpio11, Gpio12,  Gpio13, Gpio14, Gpio15, Gpio16, Gpio17, Gpio18, Gpio19, Gpio20, Gpio21, Gpio22, Gpio26, Gpio27, Gpio28}}};
 use embedded_hal::digital::InputPin; // Provides the .is_low() method
+
 use micromath::F32Ext;
 use rp2040_hal::gpio::PinState;
 
@@ -105,7 +106,7 @@ impl Pico {
             enl_pulse: pins.gpio1.into_push_pull_output_in_state(PinState::Low),
             enl_hold: pins.gpio5.into_push_pull_output_in_state(PinState::Low),
             sfl_ctrl: pins.gpio9.into_push_pull_output_in_state(PinState::Low),
-            buzzer_pwm: Buzzer::new(pins.gpio28.into_function()),
+            buzzer_pwm: Buzzer::new(pins.gpio28.into_function(), pac.PWM, &mut pac.RESETS),
         }
     }
 
@@ -168,23 +169,23 @@ impl Pico {
 
 
 
-struct Buzzer<P: PinId> {
-    pin: Pin<P, FunctionPwm, PullDown>,
+struct Buzzer {
+    pin: Pin<Gpio28, FunctionPwm, PullDown>,
     slice: Slices,
-    channel: Channel,
+    channel: Channel
 }
 
-impl<P: PinId> Buzzer<P> {
-    fn new(pac_pwm: pac::PWM, resets: &mut pac::RESETS) -> Self {
+impl Buzzer {
+    fn new(pin: Pin<Gpio28, FunctionPwm, PullDown>, pac_pwm: pac::PWM, resets: &mut pac::RESETS) -> Self {
         let mut slices = Slices::new(pac_pwm, resets);
-        let mut slice0 = slices.pwm0;  // GPIO28 → PWM0 channel A
+        let mut slice0 = slices.pwm0;  // GPIO → PWM0 channel
+
         slice0.enable();
         slice0.set_ph_correct();        // optional
         slice0.set_top(65535);          // default period
-        let buzzer_pin: Pin<Gpio16, FunctionPwm, _> = pin.into_mode();
 
         Self {
-            pin: buzzer_pin,
+            pin,
             slice: slices,
             channel: Channel::A,
         }
