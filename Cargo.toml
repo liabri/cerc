@@ -1,0 +1,12 @@
+[package]
+name = "cerc"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+cortex-m-rt = "0.7.5"
+rp-pico = "0.9"
+rp2040-hal = "0.11.0"
+embedded-hal = "1.0.0"
+panic-halt = "1.0.0"
+micromath = "2.1.0"
