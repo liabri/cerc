@@ -28,15 +28,14 @@ The timer exclusively works in f-stops, i.e. the display does not display second
 
 | State | DS1 (3-bit Display) | BZ1 (Buzzer) | K1/K2 (Enlarger) | K3 (Safelight) |
 | :--- | :--- | :--- | :--- | :--- |
-| **Idle / Selecting** | f-stops (e.g. `5.5`) | Silent | OFF | **ON** |
-| **Focus Mode** | f-stops (counting) | Silent | **ON** | OFF |
-| **Exposure Delay** | No change | High Chirp | OFF | OFF |
-| **Exposing** | Countdown (e.g. `4.2`) | Silent | **ON** | OFF -> 1s delay |
-| **Test Segment Pause** | Next stop (blink) | Two Chirps | OFF | **ON** |
-| **Finished** | **out** | Two Chirps | OFF | **ON** |
-| **Burn Mode Entry** | **b0.0** | Short Chirp | OFF | No Change |
+| **Idle / Selecting** | f-stops (e.g. `5.5`) | Silent | Already OFF | AS Per Safety Light Toggle Lever |
+| **Focus Mode** | f-stops (counting) | Silent | Analogue **ON** | AS Per Safety Light Toggle Lever |
+| **Exposing** | Countdown (e.g. `4.2`) | Silent | Analogue **OFF** 1s delay -> **Software ON** | OFF -> 1s delay |
+| **Test Segment Pause** | Next stop (blink) | Two Chirps | Already OFF | AS PER Safety Light Toggle Lever |
+| **Finished** | **out** | Two Chirps | Software OFF | AS PER Safety Light Toggle Lever |
+| **Burn Mode Entry** | **b0.0** | Short Chirp | Already OFF | AS Per Safety Light Toggle Lever |
 | **Invalid Action** | No change | **ERR_BUZZ** | No change | No Change |
-| **Safety Lock** | **hot** | Long Pulse | **Forced OFF** | **ON** |
+| **Safety Lock** | **hot** | Long Pulse | **Forced (Analogue) OFF** | AS Per Safety Light Toggle Lever |
 
 SW_FOCUS puts the enlarger on for up to 3 minutes, where after it will automatically turn off for safety reasons (overheating). The timer will not be usable and the display will display « hot » for 3 minutes thereafter, until the enlarger can be put on again. An override is possible by double pressing the BURN_BTN. Additionally, it is forbidden to press the PRINT_BTN whilst SW_FOCUS is closed as the lamp would not turn off after the expoure (since it is manually forced on).
 
