@@ -31,7 +31,8 @@ The timer exclusively works in f-stops, i.e. the display does not display second
 | **Idle / Selecting** | f-stops (e.g. `5.5`) | Silent | Already OFF | AS Per Safety Light Toggle Lever |
 | **Focus Mode** | f-stops (counting) | Silent | Analogue **ON** | AS Per Safety Light Toggle Lever |
 | **Exposing** | Countdown (e.g. `4.2`) | Silent | Analogue **OFF** 1s delay -> **Software ON** | OFF -> 1s delay |
-| **Test Segment Pause** | Next stop (blink) | Two Chirps | Already OFF | AS PER Safety Light Toggle Lever |
+| **Test Segment Pause** | Next stop (blink) | Two Chirps | Software **OFF** | AS PER Safety Light Toggle Lever |
+| **Test Segment** | No change | None | Software **ON** | As PER Safety Light Toggle Lever |
 | **Finished** | **out** | Two Chirps | Software OFF | AS PER Safety Light Toggle Lever |
 | **Burn Mode Entry** | **b0.0** | Short Chirp | Already OFF | AS Per Safety Light Toggle Lever |
 | **Invalid Action** | No change | **ERR_BUZZ** | No change | No Change |
